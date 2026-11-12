@@ -476,3 +476,53 @@ paste a working command here
 **Status:** Tested / Setup-specific / Starting point.
 **Notes:** Important limitation or dependency.
 ```
+
+
+### DownloadAudio — choose the output folder
+
+A tested Windows PowerShell example:
+
+§§§powershell
+yt-dlp -x --audio-format wav -P "$HOME\Downloads" "https://youtu.be/VIDEO_ID"
+§§§
+
+Requires FFmpeg. WAV is an uncompressed output container, but converting a compressed source to WAV does not restore information that was lost in the original compression.
+
+### RemoteEvidencePacket — capture a desktop and its terminal together
+
+**Tested cross-machine sequence:** when the task needs both a real Windows desktop screenshot and the remote terminal state:
+
+1. Connect to the Windows machine over the trusted Tailscale/SSH path.
+2. Recover the existing WSL/tmux session and capture bounded terminal scrollback with §tmux capture-pane -p -S -1000§.
+3. Trigger the interactive desktop screenshot task in the logged-in Windows session. A headless SSH screenshot is not equivalent.
+4. Wait for the task's completion result and session marker before using the image.
+5. Create a small manifest describing the machine/session, timestamp, screenshot, terminal capture, and relevant run/evidence identity.
+6. Validate the PNG, package screenshot + terminal + manifest into a timestamped ZIP, and calculate SHA-256.
+7. Retrieve the actual ZIP over the approved SSH/SCP/SFTP path and verify its hash after transfer.
+
+**Observed example:** a successful packet contained §desktop.png§, §terminal.txt§, and §manifest.txt§ in a timestamped ZIP; it was transferred to another PC. The interactive capture required a logged-in Windows session. Do not assume tmux survives WSL termination, Windows logout, or reboot merely because a detached session worked once.
+
+### WebsiteDeploy — replace an asset on a Git-connected site
+
+**Tested workflow with a Cloudflare-connected Git repository:**
+
+1. Identify the exact website repository and the path of the currently deployed asset.
+2. Preserve the old asset or its Git revision.
+3. Put the replacement at the same intended path/name, checking transparency, dimensions, animation, and file size.
+4. Inspect the diff to confirm only the intended asset changed.
+5. Commit and push to the deployment branch.
+6. Check the hosting provider's deployment result.
+7. Open the live website and inspect the served asset; do not treat a successful push as deployment proof.
+
+This workflow was used to replace a GitHub-style GIF on indrolend.com. The source asset was supplied locally; Cloudflare was already connected to Git. Exact repository paths and deployment branch are site-specific.
+
+### FileTransfer — move a file between your own machines
+
+Use the simplest transfer that fits:
+
+- **Same Tailscale network:** Taildrop is convenient for direct device-to-device file transfer.
+- **Remote shell available:** use SCP/SFTP for a known file or bounded evidence packet.
+- **Chat attachment:** copy the actual file object, not a text path.
+- **Large or repeatable handoff:** package a small manifest + artifacts, transfer it, then compare SHA-256 at the destination.
+
+Always verify the received file exists and matches the source. A successful transfer command is not a substitute for checking the destination bytes.
