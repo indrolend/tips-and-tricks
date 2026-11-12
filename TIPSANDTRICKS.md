@@ -4,7 +4,54 @@ A practical cheat sheet of useful computer workflows. These are small techniques
 
 The names below are memorable labels, not commands or a formal system. Search by the situation you are in.
 
-**Status labels:** **Tested** = observed working in an actual session. **Setup-specific** = worked in a particular machine, shell, app, or configuration. **Starting point** = useful recipe that may need adjustment.
+**Status labels:** **Tested** = observed working in an actual session. **Observed failure** = a real failure produced a reusable lesson. **Documented** = the capability or procedure exists but was not executed in the cited session. **Setup-specific** = worked in a particular machine, shell, app, or configuration. **Starting point** = useful recipe that may need adjustment.
+
+When the distinction matters, record the platform, prerequisites, last verified date, software version, verification step, and evidence source. A personal path, process ID, hash, run ID, or commit belongs in the example or evidence—not in the universal procedure.
+
+---
+
+## Verification: prove the result that matters
+
+### RuntimeIdentity — prove which command you are actually running
+
+**When:** Source code and documentation look correct, but a command behaves differently than expected.
+
+PowerShell:
+
+```powershell
+Get-Command indro -All | Format-List Name,CommandType,Source,Definition
+indro --help
+```
+
+Replace `indro` with the command being investigated. Record the resolved executable or script, then check its version or help output. A repository checkout does not prove that the shell is invoking code from that checkout.
+
+**Status:** Tested on Windows PowerShell.
+
+### StateEffectPersistence — verify three different kinds of success
+
+For an application-changing operation, ask three separate questions:
+
+1. **State:** Did the setting, route, file, or application state change?
+2. **Effect:** Did the intended visible, audible, or behavioral result occur?
+3. **Persistence:** Does the result survive save/reopen, restart, rebuild, or another relevant boundary?
+
+A matching state readback does not prove the intended effect. An immediate effect does not prove persistence. Report the highest level actually verified instead of collapsing all three into “success.”
+
+**Status:** Tested across Windows application, browser-fixture, and FL Studio workflows.
+
+### ExitZeroIsNotProof — inspect the output contract
+
+An exit code of zero proves only that the process reported success. Depending on the task, also verify:
+
+- Required protocol fields or assertions.
+- Expected files, dimensions, duration, or hashes.
+- The intended application, profile, project, window, or device.
+- Human-visible behavior such as rendered visuals or audible output.
+- Restart or reopen persistence when it matters.
+
+If a command times out after it may have executed, treat the outcome as **unknown**. Observe current state before retrying; a blind retry can duplicate or reverse the original action.
+
+**Status:** Tested; failed protocol, artifact, screenshot, and persistence checks have all been observed despite superficially successful execution.
 
 ---
 
@@ -474,6 +521,13 @@ paste a working command here
 ```
 
 **Status:** Tested / Setup-specific / Starting point.
+**Platform:** Windows / macOS / Linux / cross-platform.
+**Prerequisites:** Required tools, permissions, application state, and working directory.
+**Last verified:** YYYY-MM-DD with relevant software version.
+**Verification:** The readback, artifact, behavior, or persistence check that proves the result.
+**Evidence:** Source conversation/task, receipt, commit, log, or documentation link.
+**Failure signature:** A common failure and what it actually means.
+**Supersedes:** Older command or trick replaced by this one, if any.
 **Notes:** Important limitation or dependency.
 ```
 
