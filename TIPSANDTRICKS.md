@@ -385,6 +385,19 @@ Before repeating a long verification, look for an existing successful run. Reuse
 
 A cached/reused result saves work; it is not a fresh execution. If identity changed, run the verification again.
 
+### CapabilityLedger — preserve what was requested, effective, observed, and measured
+
+When an experiment requests a feature, do not record only PASS or FAIL. Preserve four separate facts:
+
+1. **Requested:** the configuration or capability the caller asked for.
+2. **Effective:** the implementation the runtime actually selected.
+3. **Observed:** the state or effect that was independently detected.
+4. **Cost:** the measured resource cost and its measurement method.
+
+Keep limitations beside the record. For example, renderer activation can establish that a shadow path became effective without establishing that its visual quality is acceptable. If the compact record refers to screenshots, video, logs, or telemetry, cover the record and every referenced artifact with a manifest of byte counts and SHA-256 hashes. Revalidate the complete manifest before reusing the claim; reject missing, changed, escaping, or schema-incompatible evidence.
+
+**Status:** Tested across a deterministic Digital Breakdown shadow experiment, Data Game Tools evidence bundle, and INDRO retained capability validation. A one-line change to a copied log correctly invalidated reuse.
+
 ### CTestConfig — remember Visual Studio's configuration
 
 For multi-configuration Visual Studio CMake builds, specify the configuration:
