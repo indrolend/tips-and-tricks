@@ -398,6 +398,28 @@ Keep limitations beside the record. For example, renderer activation can establi
 
 **Status:** Tested across a deterministic Digital Breakdown shadow experiment, Data Game Tools evidence bundle, and INDRO retained capability validation. A one-line change to a copied log correctly invalidated reuse.
 
+### CapabilitySource — record which contributor supplied an effective feature
+
+Requested and effective names are insufficient when several implementations can
+satisfy the same feature. Record the effective source as a typed value such as
+`directional`, `local-fixture`, or `none`, plus a stable source identifier when
+available. Test expectations against source availability, not against an
+incidental proxy such as “the room has no sun.” This lets a previously sterile
+configuration become supported without rewriting the evidence contract or
+hiding the remaining unsupported configurations.
+
+For visual closure, require both path activation and receiver-visible change.
+Capture a matched off/control frame and candidate frame from identical state,
+then inspect the actual receiving surface. A valid shadow map with stable
+coordinates can still have no meaningful visible effect, or can double-darken
+already unlit walls. Treat caster selection, projection, receiver selection,
+and compositing as separately falsifiable stages.
+
+**Status:** Tested while adding one ceiling-fixture shadow contribution to a
+Digital Breakdown sterile chamber. The 8-premise matrix classified one local
+fixture premise while preserving a separate unsupported corridor result; the
+receiver-only comparison prevented screen-wide staining from counting as a fix.
+
 ### CTestConfig — remember Visual Studio's configuration
 
 For multi-configuration Visual Studio CMake builds, specify the configuration:
