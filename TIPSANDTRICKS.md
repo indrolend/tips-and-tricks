@@ -385,6 +385,24 @@ Before repeating a long verification, look for an existing successful run. Reuse
 
 A cached/reused result saves work; it is not a fresh execution. If identity changed, run the verification again.
 
+### CompetenceTransfer — prove that a retained procedure makes later work cheaper
+
+Do not treat a saved transcript, skill, or checklist as reusable competence merely because it exists. Test whether it reduces the cost of a second correct result.
+
+1. Record a cold transaction from accepted task to verified result: elapsed time, tool calls, failed/redundant operations, source identity, change, and verification.
+2. Extract only the repeated procedure: establish identity, execute the repository-owned boundary, distinguish environment failure from product failure, make one causal change, and verify in a residue-free environment.
+3. Screen the transfer target before editing. Record stale failures, already-correct systems, and immutable evidence as **no justified change** instead of manufacturing work.
+4. Start the comparable hot measurement when a valid repair candidate is accepted. Report screening cost separately when candidate availability differs.
+5. Reuse the procedure on a different stack or repository, invalidate it when its preconditions fail, and compare correctness plus cost—not cost alone.
+
+**Tested example:** a cold browser-runtime repair took 486 seconds and 63 tool calls. Reusing the procedure on a TypeScript DSP workspace identified a pnpm 11 build-policy regression, applied one narrow configuration change, and completed fresh-install, typecheck, production-build, and deployment verification in 87 seconds and 11 calls—about 82% less on both measured axes. Two intervening candidates were correctly rejected: one passed all 16 tests, and one contained intentionally immutable recovered evidence whose limitation was already documented.
+
+This demonstrates scoped procedural reuse, not universal intelligence. Preserve the exact task boundary, rejected candidates, measurement method, and limitations so later comparisons cannot hide search or verification cost.
+
+**Status:** Tested across JavaScript browser and TypeScript DSP repositories on Windows.
+**Last verified:** 2026-11-13 with pnpm 11.25.0.
+**Verification:** clean installs/builds, interactive browser behavior, deployment checks, merged commits, and SHA-256-covered JSON receipts.
+
 ### CapabilityLedger — preserve what was requested, effective, observed, and measured
 
 When an experiment requests a feature, do not record only PASS or FAIL. Preserve four separate facts:
